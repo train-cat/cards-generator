@@ -4,9 +4,12 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"sync"
 
 	"github.com/fogleman/gg"
 )
+
+var mutex = &sync.Mutex{}
 
 func serveImage(w http.ResponseWriter, r *http.Request) {
 	v := r.URL.Query()
@@ -22,6 +25,9 @@ func serveImage(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("{\"status\": \"bad request\"}"))
 		return
 	}
+
+	mutex.Lock()
+	defer mutex.Unlock()
 
 	dc := gg.NewContextForImage(getBaseImage(Days(days)))
 
