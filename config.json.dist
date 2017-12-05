@@ -1,0 +1,75 @@
+{
+    "font": {
+        "regular": {
+            "size": 24,
+            "path": "fonts/Roboto-Regular.ttf"
+        },
+        "bold": {
+            "size": 32,
+            "path": "fonts/Roboto-Bold.ttf"
+        }
+    },
+    "text": {
+        "limit": 24,
+        "cut_after": 22
+    },
+    "image": {
+        "color": {
+            "background": {
+                "R": 0,
+                "G": 136,
+                "B": 208,
+                "A": 255
+            },
+            "day_on": {
+                "R": 249,
+                "G": 186,
+                "B": 24,
+                "A": 255
+            },
+            "day_off": {
+                "R": 230,
+                "G": 230,
+                "B": 230,
+                "A": 255
+            },
+            "text": {
+                "R": 255,
+                "G": 255,
+                "B": 255,
+                "A": 255
+            }
+        },
+        "size": {
+            "height": 200,
+            "width": 382
+        },
+        "position": {
+            "days": {
+                "y": 150
+            },
+            "mission": {
+                "x": 362,
+                "y": 10
+            },
+            "schedule": {
+                "x": 15,
+                "y": 10
+            },
+            "origin": {
+                "x": 15,
+                "y": 60
+            },
+            "terminus": {
+                "x": 15,
+                "y": 95
+            }
+        }
+    },
+    "cache": {
+        "force_refresh": false
+    },
+    "http": {
+        "port": 9090
+    }
+}
