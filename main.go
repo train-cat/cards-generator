@@ -17,7 +17,7 @@ func main() {
 	signal.Notify(stop, os.Interrupt)
 
 	http.HandleFunc("/health_check", healthCheck)
-	http.HandleFunc("/generate", serveImage)
+	http.HandleFunc("/generate/stop_time", generateStoptimeCards)
 	http.Handle("/", http.NotFoundHandler())
 
 	h := http.Server{

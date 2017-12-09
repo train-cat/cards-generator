@@ -11,7 +11,7 @@ import (
 
 var mutex = &sync.Mutex{}
 
-func serveImage(w http.ResponseWriter, r *http.Request) {
+func generateStoptimeCards(w http.ResponseWriter, r *http.Request) {
 	v := r.URL.Query()
 
 	mission := v.Get("mission")
