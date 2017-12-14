@@ -4,8 +4,10 @@ import (
 	"flag"
 	"image/color"
 
+	"github.com/Abramovic/logrus_influxdb"
 	"github.com/fogleman/gg"
-	log "github.com/sirupsen/logrus"
+	client "github.com/influxdata/influxdb/client/v2"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"golang.org/x/image/font"
 )
@@ -42,6 +44,7 @@ var (
 
 func init() {
 	initConfig()
+	initLog()
 	initFont()
 	initVar()
 	initDays()
@@ -56,7 +59,7 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 }
 
@@ -65,12 +68,12 @@ func initFont() {
 
 	fontRegular, err = gg.LoadFontFace(viper.GetString("font.regular.path"), viper.GetFloat64("font.regular.size"))
 	if err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 
 	fontBold, err = gg.LoadFontFace(viper.GetString("font.bold.path"), viper.GetFloat64("font.bold.size"))
 	if err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 }
 
@@ -138,4 +141,27 @@ func initDays() {
 		{Saturday, "S", widthPerCase*5 + widthPerCase/2},
 		{Sunday, "D", widthPerCase*6 + widthPerCase/2},
 	}
+}
+
+func initLog() {
+	config := &logrus_influxdb.Config{
+		Database:    viper.GetString("influxdb.database"),
+		Measurement: viper.GetString("influxdb.measurement"),
+		Tags:        []string{"action", "status", "type"},
+	}
+
+	// Connect to InfluxDB using the standard client.
+	influxClient, _ := client.NewHTTPClient(client.HTTPConfig{
+		Addr:     viper.GetString("influxdb.host"),
+		Username: viper.GetString("influxdb.username"),
+		Password: viper.GetString("influxdb.password"),
+	})
+
+	hook, err := logrus_influxdb.NewInfluxDB(config, influxClient)
+
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	logrus.AddHook(hook)
 }

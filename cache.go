@@ -4,7 +4,7 @@ import (
 	"image"
 
 	"github.com/fogleman/gg"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 var cacheImages = map[int]image.Image{}
@@ -15,7 +15,7 @@ func getBaseImage(week Days) image.Image {
 	if !ok || refreshCache {
 		img = generateBaseImage(week)
 
-		log.Infof("miss cache")
+		logrus.Infof("miss cache")
 
 		cacheImages[int(week)] = img
 	}

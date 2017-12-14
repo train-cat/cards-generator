@@ -71,5 +71,12 @@
     },
     "http": {
         "port": 9090
+    },
+    "influxdb": {
+        "host": "",
+        "username": "",
+        "password": "",
+        "database": "",
+        "measurement": "cards-generator"
     }
 }

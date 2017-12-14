@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"time"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -25,16 +25,16 @@ func main() {
 	}
 
 	go func() {
-		log.Infof("HTTP Server listening on %s", h.Addr)
+		logrus.Infof("HTTP Server listening on %s", h.Addr)
 
 		if err := h.ListenAndServe(); err != nil {
-			log.Fatal(err.Error())
+			logrus.Fatal(err.Error())
 		}
 	}()
 
 	<-stop
 
-	log.Info("Graceful shutdown...")
+	logrus.Info("Graceful shutdown...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -42,7 +42,7 @@ func main() {
 	err := h.Shutdown(ctx)
 
 	if err != nil {
-		log.Fatal(err.Error())
+		logrus.Fatal(err.Error())
 	}
 }
 
